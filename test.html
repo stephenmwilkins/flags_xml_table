@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<style>
+table,th,td {
+  border : 1px solid black;
+  border-collapse: collapse;
+}
+th,td {
+  padding: 5px;
+}
+</style>
+<body>
+
+<p>Click on a row to display album information.</p>
+<p id='test'></p>
+<table id="test"></table>
+
+<script>
+var x,xmlhttp,xmlDoc
+xmlhttp = new XMLHttpRequest();
+xmlhttp.open("GET", "data/test.xml", false);
+xmlhttp.send();
+xmlDoc = xmlhttp.responseXML;
+x = xmlDoc.getElementsByTagName("row");
+table="<tr><th>Index</th><th>Shape</th></tr>";
+for (i = 0; i <x.length; i++) {
+  table += "<tr onclick='displayinfo(" + i + ")'><td>";
+  table += x[i].getElementsByTagName("index")[0].childNodes[0].nodeValue;
+  table += "</td><td>";
+  table +=  x[i].getElementsByTagName("shape")[0].childNodes[0].nodeValue;
+  table += "</td></tr>";
+}
+document.getElementById("demo").innerHTML = table;
+
+function displayCD(i) {
+  document.getElementById("displayinfo").innerHTML =
+  "Artist: " +
+  x[i].getElementsByTagName("degrees")[0].childNodes[0].nodeValue +
+  "<br>Title: " +
+  x[i].getElementsByTagName("side")[0].childNodes[0].nodeValue;
+}
+</script>
+
+</body>
+</html>

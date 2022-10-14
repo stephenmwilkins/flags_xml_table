@@ -45,7 +45,7 @@ for (i = 0; i <x.length; i++) {
 
   const photomarray = ["115", "150", "200", "277", "356", "410", "444"]
   photomarray.forEach(function (item, index) {
-    console.log(item);
+    console.log("F"+item);
     table += "<tr><td>" + item + "</td>";
     table += "<td>" + x[i].getElementsByTagName("F"+item)[0].childNodes[0].nodeValue + "</td>";
     table += "<td>" + x[i].getElementsByTagName("DF"+item)[0].childNodes[0].nodeValue + "</td>";

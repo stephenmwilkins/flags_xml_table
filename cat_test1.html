@@ -12,7 +12,7 @@ th,td {
 <body>
 
 <p>Click on a row to display album information.</p>
-<p id='displayinfo'></p>
+<!-- <p id='displayinfo'></p> -->
 <table id="table"></table>
 
 <script>
@@ -30,8 +30,8 @@ for (i = 0; i <x.length; i++) {
 
   table += "<td><table>";
 
-  const array = ["X", "Y", "RA", "DEC"]
-  array.forEach(function (item, index) {
+  const infoarray = ["X", "Y", "RA", "DEC"]
+  infoarray.forEach(function (item, index) {
     console.log(item);
     table += "<tr>" + x[i].getElementsByTagName(item)[0].childNodes[0].nodeValue + "</tr>";
   });
@@ -43,8 +43,8 @@ for (i = 0; i <x.length; i++) {
 
   table += "<td><table>";
 
-  const array = ["115", "150", "200", "277", "356", "410", "444"]
-  array.forEach(function (item, index) {
+  const photomarray = ["115", "150", "200", "277", "356", "410", "444"]
+  photomarray.forEach(function (item, index) {
     console.log(item);
     table += "<tr><td>" + item + "</td>";
     table += "<td>" + x[i].getElementsByTagName("F"+item)[0].childNodes[0].nodeValue + "</td>";

@@ -11,7 +11,7 @@ th,td {
 </style>
 <body>
 
-<p>Click on a row to display album information.</p>
+<!-- <p>Click on a row to display album information.</p> -->
 <!-- <p id='displayinfo'></p> -->
 <table id="table"></table>
 
@@ -23,6 +23,17 @@ xmlhttp.send();
 xmlDoc = xmlhttp.responseXML;
 x = xmlDoc.getElementsByTagName("row");
 
+
+function precise(y) {
+  return y.toPrecision(4);
+}
+
+console.log(precise(3.12));
+console.log(precise(2.23232));
+console.log(precise(parseFloat("3.1232")));
+
+table = ""
+
 for (i = 0; i <x.length; i++) {
   table += "<tr>";
 
@@ -32,30 +43,61 @@ for (i = 0; i <x.length; i++) {
 
   const infoarray = ["X", "Y", "RA", "DEC"]
   infoarray.forEach(function (item, index) {
-    console.log(item);
-    table += "<tr>" + x[i].getElementsByTagName(item)[0].childNodes[0].nodeValue + "</tr>";
+    val = x[i].getElementsByTagName(item)[0].childNodes[0].nodeValue;
+    table += "<tr><td>" + item + "</td><td>" + precise(parseFloat(val)) + "</td></tr>";
   });
 
   table += "</table></td>";
 
 
-  // photom table
+  // JWST photom table
 
-  // table += "<td><table>";
-  //
-  // const photomarray = ["115", "150", "200", "277", "356", "410", "444"]
-  // photomarray.forEach(function (item, index) {
-  //   console.log("F"+item);
-  //   table += "<tr><td>" + item + "</td>";
-  //   table += "<td>" + x[i].getElementsByTagName("F"+item)[0].childNodes[0].nodeValue + "</td>";
-  //   table += "<td>" + x[i].getElementsByTagName("DF"+item)[0].childNodes[0].nodeValue + "</td>";
-  //   table += "</tr>";
-  // });
-  //
-  // table += "</table></td>";
+  table += "<td><table>";
+
+  const photomarray = ["115", "150", "200", "277", "356", "410", "444"]
+  photomarray.forEach(function (item, index) {
+    try {
+    table += "<tr><td>" + item + "</td>";
+    flux = x[i].getElementsByTagName("F"+item)[0].childNodes[0].nodeValue
+    err = x[i].getElementsByTagName("DF"+item)[0].childNodes[0].nodeValue
+    table += "<td>" + precise(parseFloat(flux)) + "</td>";
+    table += "<td>" + precise(parseFloat(err)) + "</td>";
+    table += "<td>" + precise(flux/err) + "</td>";
+    table += "</tr>";
+    }
+    catch {
+      console.log(item);
+    }
+  });
+
+  table += "</table></td>";
+
+  // HST photom table
+
+  table += "<td><table>";
+
+  const HSTphotomarray = ["606", "814", "105", "125", "140", "160"]
+  HSTphotomarray.forEach(function (item, index) {
+    try {
+    table += "<tr><td>" + item + "</td>";
+    flux = x[i].getElementsByTagName("F"+item)[0].childNodes[0].nodeValue
+    err = x[i].getElementsByTagName("DF"+item)[0].childNodes[0].nodeValue
+    table += "<td>" + precise(parseFloat(flux)) + "</td>";
+    table += "<td>" + precise(parseFloat(err)) + "</td>";
+    table += "<td>" + precise(flux/err) + "</td>";
+    table += "</tr>";
+    }
+    catch {
+      console.log(item);
+    }
+  });
+
+  table += "</table></td>";
 
   table += "</tr>";
 }
+
+
 document.getElementById("table").innerHTML = table;
 
 

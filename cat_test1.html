@@ -41,18 +41,18 @@ for (i = 0; i <x.length; i++) {
 
   // photom table
 
-  table += "<td><table>";
-
-  const photomarray = ["115", "150", "200", "277", "356", "410", "444"]
-  photomarray.forEach(function (item, index) {
-    console.log("F"+item);
-    table += "<tr><td>" + item + "</td>";
-    table += "<td>" + x[i].getElementsByTagName("F"+item)[0].childNodes[0].nodeValue + "</td>";
-    table += "<td>" + x[i].getElementsByTagName("DF"+item)[0].childNodes[0].nodeValue + "</td>";
-    table += "</tr>";
-  });
-
-  table += "</table></td>";
+  // table += "<td><table>";
+  //
+  // const photomarray = ["115", "150", "200", "277", "356", "410", "444"]
+  // photomarray.forEach(function (item, index) {
+  //   console.log("F"+item);
+  //   table += "<tr><td>" + item + "</td>";
+  //   table += "<td>" + x[i].getElementsByTagName("F"+item)[0].childNodes[0].nodeValue + "</td>";
+  //   table += "<td>" + x[i].getElementsByTagName("DF"+item)[0].childNodes[0].nodeValue + "</td>";
+  //   table += "</tr>";
+  // });
+  //
+  // table += "</table></td>";
 
   table += "</tr>";
 }

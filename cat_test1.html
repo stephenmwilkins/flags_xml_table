@@ -26,11 +26,34 @@ x = xmlDoc.getElementsByTagName("row");
 for (i = 0; i <x.length; i++) {
   table += "<tr>";
 
+  // info table
+
+  table += "<td><table>";
+
   const array = ["X", "Y", "RA", "DEC"]
   array.forEach(function (item, index) {
     console.log(item);
-    table += "<td>" + x[i].getElementsByTagName(item)[0].childNodes[0].nodeValue + "</td>";
+    table += "<tr>" + x[i].getElementsByTagName(item)[0].childNodes[0].nodeValue + "</tr>";
   });
+
+  table += "</table></td>";
+
+
+  // photom table
+
+  table += "<td><table>";
+
+  const array = ["115", "150", "200", "277", "356", "410", "444"]
+  array.forEach(function (item, index) {
+    console.log(item);
+    table += "<tr><td>" + item + "</td>";
+    table += "<td>" + x[i].getElementsByTagName("F"+item)[0].childNodes[0].nodeValue + "</td>";
+    table += "<td>" + x[i].getElementsByTagName("DF"+item)[0].childNodes[0].nodeValue + "</td>";
+    table += "</tr>";
+  });
+
+  table += "</table></td>";
+
   table += "</tr>";
 }
 document.getElementById("table").innerHTML = table;

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<style>
+table,th,td {
+  border : 1px solid black;
+  border-collapse: collapse;
+}
+th,td {
+  padding: 5px;
+}
+</style>
+<body>
+
+<p>Click on a row to display album information.</p>
+<p id='displayinfo'></p>
+<table id="table"></table>
+
+<script>
+var x,xmlhttp,xmlDoc
+xmlhttp = new XMLHttpRequest();
+xmlhttp.open("GET", "data/CEERS_NIRCam2_v0.07.2.xml", false);
+xmlhttp.send();
+xmlDoc = xmlhttp.responseXML;
+x = xmlDoc.getElementsByTagName("row");
+
+for (i = 0; i <x.length; i++) {
+  table += "<tr>";
+
+  const array = ["X", "Y", "RA", "DEC"]
+  array.forEach(function (item, index) {
+    table += x[i].getElementsByTagName(item)[0].childNodes[0].nodeValue;
+  });
+  table += "</tr>";
+}
+document.getElementById("table").innerHTML = table;
+
+
+</script>
+
+</body>
+</html>

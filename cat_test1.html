@@ -28,7 +28,8 @@ for (i = 0; i <x.length; i++) {
 
   const array = ["X", "Y", "RA", "DEC"]
   array.forEach(function (item, index) {
-    table += x[i].getElementsByTagName(item)[0].childNodes[0].nodeValue;
+    console.log(item);
+    table += "<td>" + x[i].getElementsByTagName(item)[0].childNodes[0].nodeValue + "</td>";
   });
   table += "</tr>";
 }

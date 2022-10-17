@@ -3,7 +3,7 @@
 import numpy as np
 
 import pandas as pd
-from astropy.table import Table
+from astropy.table import Table, join, hstack
 from astropy.io import ascii, fits
 
 
@@ -12,32 +12,44 @@ from astropy.io import ascii, fits
 data_dir = '/Users/stephenwilkins/Dropbox/Research/data/images/jwst/ceers/cats'
 
 version = '0.2'
-version = '0.07.2'
+# version = '0.07.2'
 
-field = '2'
+field = '1'
 
 cat_name = f'CEERS_NIRCam{field}_v{version}'
+
 filename = f'{data_dir}/{cat_name}_photom.fits'
-# photom = ascii.read(filename)
-# print(photom.colnames)
-
-
-
 hdul = fits.open(filename)
 data = hdul[1].data # assuming the first extension is a table
 hdul.close()
+photom = Table(rows = data, names = data.columns.names)
 
-data10 = data[:10]
+filename = f'{data_dir}/{cat_name}_zphot.fits'
+hdul = fits.open(filename)
+data = hdul[1].data # assuming the first extension is a table
+hdul.close()
+zphot = Table(rows = data, names = data.columns.names)
 
-print(data10)
+combined = photom
+combined['ZA'] = zphot['ZA'][0]
 
-photom = Table(rows = data10, names = data10.columns.names)
-
-names = [name for name in photom.colnames if len(photom[name].shape) <= 1]
-photom_df = photom[names].to_pandas()
+# combined = join(photom, zphot, join_type = 'cartesian')
+# combined = hstack([photom, zphot])
 
 
-xml = photom_df.to_xml(parser = 'etree')
+
+
+combined = combined[:10]
+
+print(combined.colnames)
+
+
+
+names = [name for name in combined.colnames if len(combined[name].shape) <= 1]
+combined_df = combined[names].to_pandas()
+
+
+xml = combined_df.to_xml(parser = 'etree')
 
 with open(f'../data/{cat_name}.xml', 'w') as f:
     f.writelines(xml)
